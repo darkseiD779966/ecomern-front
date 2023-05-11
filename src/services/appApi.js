@@ -1,7 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // create the api
-
+const corsOptions = {
+  origin: "http://localhost:3000",
+  optionsSuccessStatus: 200,
+  credentials: true,
+  allowedHeaders: ["Content-Type"]
+};
 export const appApi = createApi({
     reducerPath: "appApi",
     baseQuery: fetchBaseQuery({ baseUrl: "https://ecomern-back.onrender.com" }),
