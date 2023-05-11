@@ -24,6 +24,10 @@ export const appApi = createApi({
                 url: "/users/login",
                 method: "POST",
                 body: user,
+                  headers: {
+      "Access-Control-Allow-Origin": "https://ecommerce7-w4hj.onrender.com/",
+      "Content-Type": "application/json",
+    },
             }),
         }),
         // creating product
