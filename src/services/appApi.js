@@ -25,7 +25,7 @@ export const appApi = createApi({
                 method: "POST",
                 body: user,
                   headers: {
-      "Access-Control-Allow-Origin": "https://ecommerce7-w4hj.onrender.com/",
+      "Access-Control-Allow-Origin": "https://ecommerce7-w4hj.onrender.com",
       "Content-Type": "application/json",
     },
             }),
