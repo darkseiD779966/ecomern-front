@@ -1,15 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // create the api
-const corsOptions = {
-  origin: "http://localhost:3000",
-  optionsSuccessStatus: 200,
-  credentials: true,
-  allowedHeaders: ["Content-Type"]
-};
+
 export const appApi = createApi({
     reducerPath: "appApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "https://ecomern-back.onrender.com" }),
+    baseQuery: fetchBaseQuery({ baseUrl: "https://ecand.onrender.com" }),
     endpoints: (builder) => ({
         signup: builder.mutation({
             query: (user) => ({
@@ -24,10 +19,7 @@ export const appApi = createApi({
                 url: "/users/login",
                 method: "POST",
                 body: user,
-                  headers: {
-      "Access-Control-Allow-Origin": "https://ecommerce7-w4hj.onrender.com",
-      "Content-Type": "application/json",
-    },
+       
             }),
         }),
         // creating product
