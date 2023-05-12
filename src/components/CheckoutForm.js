@@ -20,7 +20,7 @@ function CheckoutForm() {
         e.preventDefault();
         if (!stripe || !elements || user.cart.count <= 0) return;
         setPaying(true);
-        const { client_secret } = await fetch("https://ecomern-back.onrender.com/create-payment", {
+        const { client_secret } = await fetch("https://ecand.onrender.com/create-payment", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
