@@ -20,33 +20,48 @@ function CheckoutForm() {
         e.preventDefault();
         if (!stripe || !elements || user.cart.count <= 0) return;
         setPaying(true);
-        const { client_secret } = await fetch("https://ecand.onrender.com/create-payment", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer ",
-            },
-            body: JSON.stringify({ amount: user.cart.total }),
-        }).then((res) => res.json());
-        const { paymentIntent } = await stripe.confirmCardPayment(client_secret, {
+      
+        try {
+            const response = await fetch("https://ecand.onrender.com/create-payment", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: "Bearer",
+                },
+                body: JSON.stringify({ amount: user.cart.total }),
+              });
+              
+              const responseData = await response.json();
+              console.log(responseData); // Check the response data here
+              
+              const { client_secret } = responseData;
+              
+     
+          const { paymentIntent } = await stripe.confirmCardPayment(client_secret, {
             payment_method: {
-                card: elements.getElement(CardElement),
+              card: elements.getElement(CardElement),
             },
-        });
-        setPaying(false);
-
-        if (paymentIntent) {
+          });
+      
+          setPaying(false);
+      
+          if (paymentIntent) {
             createOrder({ userId: user._id, cart: user.cart, address, country }).then((res) => {
-                if (!isLoading && !isError) {
-                    setAlertMessage(`Payment ${paymentIntent.status}`);
-                    setTimeout(() => {
-                        // navigate("/orders");
-                    }, 3000);
-                }
+              if (!isLoading && !isError) {
+                setAlertMessage(`Payment ${paymentIntent.status}`);
+                setTimeout(() => {
+                  navigate("/orders");
+                }, 3000);
+              }
             });
+          }
+        } catch (error) {
+          console.log(error);
+          setPaying(false);
+          setAlertMessage("Payment failed");
         }
-    }
-
+      }
+      
     return (
         <Col className="cart-payment-container">
             <Form onSubmit={handlePay}>
